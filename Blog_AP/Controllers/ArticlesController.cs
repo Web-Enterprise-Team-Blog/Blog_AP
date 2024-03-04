@@ -20,78 +20,78 @@ namespace Blog_AP.Controllers
             _context = context;
         }
 
-        // GET: Posts
+        // GET: Articles
         public async Task<IActionResult> Index()
         {
-              return _context.Post != null ? 
-                          View(await _context.Post.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Post'  is null.");
+              return _context.Article != null ? 
+                          View(await _context.Article.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Article'  is null.");
         }
 
-        // GET: Posts/Details/5
+        // GET: Articles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Post == null)
+            if (id == null || _context.Article == null)
             {
                 return NotFound();
             }
 
-            var post = await _context.Post
-                .FirstOrDefaultAsync(m => m.post_id == id);
-            if (post == null)
+            var article = await _context.Article
+                .FirstOrDefaultAsync(m => m.article_id == id);
+            if (article == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(article);
         }
 
-        // GET: Posts/Create
+        // GET: Articles/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Posts/Create
+        // POST: Articles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("post_id,user_id,admin,falcuty_id")] Article post)
+        public async Task<IActionResult> Create([Bind("article_id,user_id,admin,falcuty_id")] Article article)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(post);
+                _context.Add(article);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            return View(article);
         }
 
-        // GET: Posts/Edit/5
+        // GET: Articles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Post == null)
+            if (id == null || _context.Article == null)
             {
                 return NotFound();
             }
 
-            var post = await _context.Post.FindAsync(id);
-            if (post == null)
+            var article = await _context.Article.FindAsync(id);
+            if (article == null)
             {
                 return NotFound();
             }
-            return View(post);
+            return View(article);
         }
 
-        // POST: Posts/Edit/5
+        // POST: Articles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("post_id,user_id,admin,falcuty_id")] Article post)
+        public async Task<IActionResult> Edit(int? id, [Bind("article_id,user_id,admin,falcuty_id")] Article article)
         {
-            if (id != post.post_id)
+            if (id != article.article_id)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace Blog_AP.Controllers
             {
                 try
                 {
-                    _context.Update(post);
+                    _context.Update(article);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostExists(post.post_id))
+                    if (!ArticleExists(article.article_id))
                     {
                         return NotFound();
                     }
@@ -116,49 +116,49 @@ namespace Blog_AP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            return View(article);
         }
 
-        // GET: Posts/Delete/5
+        // GET: Articles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Post == null)
+            if (id == null || _context.Article == null)
             {
                 return NotFound();
             }
 
-            var post = await _context.Post
-                .FirstOrDefaultAsync(m => m.post_id == id);
-            if (post == null)
+            var article = await _context.Article
+                .FirstOrDefaultAsync(m => m.article_id == id);
+            if (article == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(article);
         }
 
-        // POST: Posts/Delete/5
+        // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            if (_context.Post == null)
+            if (_context.Article == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Post'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Article'  is null.");
             }
-            var post = await _context.Post.FindAsync(id);
-            if (post != null)
+            var article = await _context.Article.FindAsync(id);
+            if (article != null)
             {
-                _context.Post.Remove(post);
+                _context.Article.Remove(article);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PostExists(int? id)
+        private bool ArticleExists(int? id)
         {
-          return (_context.Post?.Any(e => e.post_id == id)).GetValueOrDefault();
+          return (_context.Article?.Any(e => e.article_id == id)).GetValueOrDefault();
         }
     }
 }

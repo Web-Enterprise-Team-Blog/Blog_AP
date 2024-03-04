@@ -3,22 +3,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blog_AP.Models
 {
-    public class Post
+    public class Article
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("post_id")]
-        public int? post_id { get; set; }
+        [Column("article_id")]
+        public int? article_id { get; set; }
 
-        [Column("post_user_id")]
+        [Column("article_user_id")]
         [Required]
         public int? user_id { get; set; }
 
-        [Column("post_accept_by")]
+        [Column("article_accept_by")]
         [Required]
         public string? admin { get; set; }
 
-        [Column("post_falcuty")]
+        [Column("article_falcuty")]
         [Required]
         public int? falcuty_id { get; set; }
     }
