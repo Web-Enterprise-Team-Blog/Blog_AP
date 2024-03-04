@@ -1,10 +1,12 @@
 User Stories:
-As an existing user, I want to log in using my university email and password to access the system. (High priority)
-As a user, I want to reset my password if I forget by sending an information form to Administrator. (Medium priority)
-As a user, I want to reset my password after logging in. (Low priority)
 A view to manage user roles and access control within the system for Administrator. (High priority)
-A view to manage Faculty for Administrator. (Medium priority)
+As an existing user, I want to log in using my university email and password to access the system. (High priority)
 Implement secure hashing for sensitive data. (High priority)
 Ensure data is encrypted before storage. (High priority)
+
+As a user, I want to reset my password if I forget by sending an information form to Administrator. (Medium priority)
+A view to manage Faculty for Administrator. (Medium priority)
+
+As a user, I want to reset my password after logging in. (Low priority)
 
 cái nào High protity thì cần xong trước

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog_AP;
 using Blog_AP.Models;
+using Blog_AP.Data;
 
 namespace Blog_AP.Controllers
 {
@@ -35,7 +36,7 @@ namespace Blog_AP.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _context.User
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -126,7 +127,7 @@ namespace Blog_AP.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _context.User
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -157,7 +158,7 @@ namespace Blog_AP.Controllers
 
         private bool UserExists(int? id)
         {
-          return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

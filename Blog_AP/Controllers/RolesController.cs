@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog_AP;
 using Blog_AP.Models;
+using Blog_AP.Data;
 
 namespace Blog_AP.Controllers
 {
