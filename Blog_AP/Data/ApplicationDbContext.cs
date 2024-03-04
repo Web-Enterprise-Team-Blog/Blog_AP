@@ -12,7 +12,7 @@ namespace Blog_AP.Data
         }
         public DbSet<Blog_AP.Models.User>? User { get; set; }
         public DbSet<Blog_AP.Models.Role>? Role { get; set; }
-        public DbSet<Blog_AP.Models.Post>? Post { get; set; }
+        public DbSet<Blog_AP.Models.Article>? Post { get; set; }
         public DbSet<Blog_AP.Models.Falcuty>? Falcuty { get; set; }
     }
 }

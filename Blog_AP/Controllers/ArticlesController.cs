@@ -11,11 +11,11 @@ using Blog_AP.Data;
 
 namespace Blog_AP.Controllers
 {
-    public class PostsController : Controller
+    public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PostsController(ApplicationDbContext context)
+        public ArticlesController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -57,7 +57,7 @@ namespace Blog_AP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("post_id,user_id,admin,falcuty_id")] Post post)
+        public async Task<IActionResult> Create([Bind("post_id,user_id,admin,falcuty_id")] Article post)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace Blog_AP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("post_id,user_id,admin,falcuty_id")] Post post)
+        public async Task<IActionResult> Edit(int? id, [Bind("post_id,user_id,admin,falcuty_id")] Article post)
         {
             if (id != post.post_id)
             {
