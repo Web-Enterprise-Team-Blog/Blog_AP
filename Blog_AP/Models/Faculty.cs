@@ -7,11 +7,11 @@ namespace Blog_AP.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("falcuty_id")]
-        public int? post_id { get; set; }
+        [Column("faculty_id")]
+        public int? FacultyId { get; set; }
 
-        [Column("falcuty_name")]
+        [Column("faculty_name")]
         [Required]
-        public string? user_id { get; set; }
+        public string? FacultyName { get; set; }
     }
 }

@@ -11,87 +11,87 @@ using Blog_AP.Data;
 
 namespace Blog_AP.Controllers
 {
-    public class FalcutiesController : Controller
+    public class FacultiesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public FalcutiesController(ApplicationDbContext context)
+        public FacultiesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Falcuties
+        // GET: Faculties
         public async Task<IActionResult> Index()
         {
-              return _context.Falcuty != null ? 
-                          View(await _context.Falcuty.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Falcuty'  is null.");
+              return _context.Faculty != null ? 
+                          View(await _context.Faculty.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Faculty'  is null.");
         }
 
-        // GET: Falcuties/Details/5
+        // GET: Faculties/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Falcuty == null)
+            if (id == null || _context.Faculty == null)
             {
                 return NotFound();
             }
 
-            var falcuty = await _context.Falcuty
-                .FirstOrDefaultAsync(m => m.post_id == id);
-            if (falcuty == null)
+            var faculty = await _context.Faculty
+                .FirstOrDefaultAsync(m => m.FacultyId == id);
+            if (faculty == null)
             {
                 return NotFound();
             }
 
-            return View(falcuty);
+            return View(faculty);
         }
 
-        // GET: Falcuties/Create
+        // GET: Faculties/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Falcuties/Create
+        // POST: Faculties/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("post_id,user_id")] Faculty falcuty)
+        public async Task<IActionResult> Create([Bind("post_id,user_id")] Faculty faculty)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(falcuty);
+                _context.Add(faculty);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(falcuty);
+            return View(faculty);
         }
 
-        // GET: Falcuties/Edit/5
+        // GET: Faculties/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Falcuty == null)
+            if (id == null || _context.Faculty == null)
             {
                 return NotFound();
             }
 
-            var falcuty = await _context.Falcuty.FindAsync(id);
-            if (falcuty == null)
+            var faculty = await _context.Faculty.FindAsync(id);
+            if (faculty == null)
             {
                 return NotFound();
             }
-            return View(falcuty);
+            return View(faculty);
         }
 
-        // POST: Falcuties/Edit/5
+        // POST: Faculties/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("post_id,user_id")] Faculty falcuty)
+        public async Task<IActionResult> Edit(int? id, [Bind("FacultyId,FacultyName")] Faculty faculty)
         {
-            if (id != falcuty.post_id)
+            if (id != faculty.FacultyId)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace Blog_AP.Controllers
             {
                 try
                 {
-                    _context.Update(falcuty);
+                    _context.Update(faculty);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FalcutyExists(falcuty.post_id))
+                    if (!FacultyExists(faculty.FacultyId))
                     {
                         return NotFound();
                     }
@@ -116,49 +116,49 @@ namespace Blog_AP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(falcuty);
+            return View(faculty);
         }
 
-        // GET: Falcuties/Delete/5
+        // GET: Faculties/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Falcuty == null)
+            if (id == null || _context.Faculty == null)
             {
                 return NotFound();
             }
 
-            var falcuty = await _context.Falcuty
-                .FirstOrDefaultAsync(m => m.post_id == id);
-            if (falcuty == null)
+            var faculty = await _context.Faculty
+                .FirstOrDefaultAsync(m => m.FacultyId == id);
+            if (faculty == null)
             {
                 return NotFound();
             }
 
-            return View(falcuty);
+            return View(faculty);
         }
 
-        // POST: Falcuties/Delete/5
+        // POST: Faculties/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            if (_context.Falcuty == null)
+            if (_context.Faculty == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Falcuty'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Faculty'  is null.");
             }
-            var falcuty = await _context.Falcuty.FindAsync(id);
-            if (falcuty != null)
+            var faculty = await _context.Faculty.FindAsync(id);
+            if (faculty != null)
             {
-                _context.Falcuty.Remove(falcuty);
+                _context.Faculty.Remove(faculty);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FalcutyExists(int? id)
+        private bool FacultyExists(int? id)
         {
-          return (_context.Falcuty?.Any(e => e.post_id == id)).GetValueOrDefault();
+          return (_context.Faculty?.Any(e => e.FacultyId == id)).GetValueOrDefault();
         }
     }
 }
