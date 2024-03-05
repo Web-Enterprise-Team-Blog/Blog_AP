@@ -23,15 +23,15 @@ namespace Blog_AP.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-              return _context.Users != null ? 
-                          View(await _context.Users.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Users'  is null.");
+              return _context.User != null ? 
+                          View(await _context.User.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.User'  is null.");
         }
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.User == null)
             {
                 return NotFound();
             }
@@ -61,6 +61,14 @@ namespace Blog_AP.Controllers
         {
             if (ModelState.IsValid)
             {
+                var selectedRole = _context.Role.FirstOrDefault(c => c.RoleName == user.Role.RoleName);
+
+                user.Role = selectedRole;
+
+                var selectedFaculty = _context.Faculty.FirstOrDefault(c => c.FacultyName == user.Faculty.FacultyName);
+
+                user.Faculty = selectedFaculty;
+
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -71,16 +79,28 @@ namespace Blog_AP.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.User == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.User
+                .Include(u => u.Role)
+                .Include(u => u.Faculty)
+                .FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
             {
                 return NotFound();
             }
+
+            ViewBag.Roles = _context.Role
+                .Select(r => r.RoleName)
+                .ToList();
+
+            ViewBag.Faculties = _context.Faculty
+                .Select(f => f.FacultyName)
+                .ToList();
+
             return View(user);
         }
 
@@ -100,6 +120,18 @@ namespace Blog_AP.Controllers
             {
                 try
                 {
+                    // Retrieve the selected role by name
+                    var selectedRole = _context.Role.FirstOrDefault(c => c.RoleName == user.Role.RoleName);
+
+                    // Update the user's role based on the selected role name
+                    user.Role = selectedRole;
+
+                    // Retrieve the selected role by name
+                    var selectedFaculty = _context.Faculty.FirstOrDefault(c => c.FacultyName == user.Faculty.FacultyName);
+
+                    // Update the user's role based on the selected role name
+                    user.Faculty = selectedFaculty;
+
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
@@ -122,7 +154,7 @@ namespace Blog_AP.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.User == null)
             {
                 return NotFound();
             }
@@ -142,14 +174,14 @@ namespace Blog_AP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            if (_context.Users == null)
+            if (_context.User == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Users'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.User'  is null.");
             }
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.User.FindAsync(id);
             if (user != null)
             {
-                _context.Users.Remove(user);
+                _context.User.Remove(user);
             }
             
             await _context.SaveChangesAsync();

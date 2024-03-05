@@ -22,81 +22,127 @@ namespace Blog_AP.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Blog_AP.Models.Falcuty", b =>
+            modelBuilder.Entity("Blog_AP.Models.Article", b =>
                 {
-                    b.Property<int?>("post_id")
+                    b.Property<int?>("article_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("falcuty_id");
+                        .HasColumnName("article_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("post_id"), 1L, 1);
-
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("falcuty_name");
-
-                    b.HasKey("post_id");
-
-                    b.ToTable("Falcuty");
-                });
-
-            modelBuilder.Entity("Blog_AP.Models.Post", b =>
-                {
-                    b.Property<int?>("post_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("post_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("post_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("article_id"), 1L, 1);
 
                     b.Property<string>("admin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("post_accept_by");
+                        .HasColumnName("article_accept_by");
 
                     b.Property<int?>("falcuty_id")
                         .IsRequired()
                         .HasColumnType("int")
-                        .HasColumnName("post_falcuty");
+                        .HasColumnName("article_falcuty");
 
                     b.Property<int?>("user_id")
                         .IsRequired()
                         .HasColumnType("int")
-                        .HasColumnName("post_user_id");
+                        .HasColumnName("article_user_id");
 
-                    b.HasKey("post_id");
+                    b.HasKey("article_id");
 
-                    b.ToTable("Post");
+                    b.ToTable("Article");
+                });
+
+            modelBuilder.Entity("Blog_AP.Models.Faculty", b =>
+                {
+                    b.Property<int?>("FacultyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("faculty_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("FacultyId"), 1L, 1);
+
+                    b.Property<string>("FacultyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("faculty_name");
+
+                    b.HasKey("FacultyId");
+
+                    b.ToTable("Faculty");
                 });
 
             modelBuilder.Entity("Blog_AP.Models.Role", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("role_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"), 1L, 1);
 
                     b.Property<string>("RoleName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("role_name");
 
-                    b.HasKey("Id");
+                    b.HasKey("RoleId");
 
                     b.ToTable("Role");
                 });
 
             modelBuilder.Entity("Blog_AP.Models.User", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("FacultyId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserEmail")
                         .IsRequired()
@@ -105,17 +151,30 @@ namespace Blog_AP.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
                         .HasColumnName("user_name");
 
                     b.Property<string>("UserPassword")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("passoword");
+                        .HasColumnName("password");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.HasIndex("FacultyId");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -168,71 +227,6 @@ namespace Blog_AP.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -320,6 +314,21 @@ namespace Blog_AP.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Blog_AP.Models.User", b =>
+                {
+                    b.HasOne("Blog_AP.Models.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId");
+
+                    b.HasOne("Blog_AP.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
+
+                    b.Navigation("Faculty");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -331,7 +340,7 @@ namespace Blog_AP.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Blog_AP.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -340,7 +349,7 @@ namespace Blog_AP.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Blog_AP.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -355,7 +364,7 @@ namespace Blog_AP.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Blog_AP.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -364,7 +373,7 @@ namespace Blog_AP.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Blog_AP.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

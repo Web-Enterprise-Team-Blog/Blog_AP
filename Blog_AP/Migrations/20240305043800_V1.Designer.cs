@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog_AP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240303182534_initialize_database")]
-    partial class initialize_database
+    [Migration("20240305043800_V1")]
+    partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,112 @@ namespace Blog_AP.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Blog_AP.Models.Article", b =>
+                {
+                    b.Property<int?>("article_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("article_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("article_id"), 1L, 1);
+
+                    b.Property<string>("admin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("article_accept_by");
+
+                    b.Property<int?>("falcuty_id")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasColumnName("article_falcuty");
+
+                    b.Property<int?>("user_id")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasColumnName("article_user_id");
+
+                    b.HasKey("article_id");
+
+                    b.ToTable("Article");
+                });
+
+            modelBuilder.Entity("Blog_AP.Models.Faculty", b =>
+                {
+                    b.Property<int?>("FacultyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("faculty_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("FacultyId"), 1L, 1);
+
+                    b.Property<string>("FacultyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("faculty_name");
+
+                    b.HasKey("FacultyId");
+
+                    b.ToTable("Faculty");
+                });
+
+            modelBuilder.Entity("Blog_AP.Models.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("role_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"), 1L, 1);
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("role_name");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("Blog_AP.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("FacultyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("user_email");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("user_name");
+
+                    b.Property<string>("UserPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("password");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacultyId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("User");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -169,10 +275,12 @@ namespace Blog_AP.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -209,10 +317,12 @@ namespace Blog_AP.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -220,6 +330,21 @@ namespace Blog_AP.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Blog_AP.Models.User", b =>
+                {
+                    b.HasOne("Blog_AP.Models.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId");
+
+                    b.HasOne("Blog_AP.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
+
+                    b.Navigation("Faculty");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
