@@ -9,11 +9,11 @@ namespace Blog_AP.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("user_id")]
-        public int Id { get; set; }
+        public override string Id { get; set; }
 
         [Column("user_name")]
         [Required]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         [Column("user_email")]
         [Required]

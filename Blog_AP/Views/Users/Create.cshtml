@@ -28,13 +28,13 @@
                 <span asp-validation-for="UserPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Role.RoleName">Category</label>
+                <label asp-for="Role.RoleName">Role</label>
                 <select asp-for="Role.RoleName" asp-items="new SelectList(ViewBag.Roles)" class="form-control"></select>
                 <span asp-validation-for="Role.RoleName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Faculty.FacultyName">Category</label>
-                <select asp-for="Faculty.FacultyName" asp-items="new SelectList(ViewBag.Categories)" class="form-control"></select>
+                <label asp-for="Faculty.FacultyName">Faculty</label>
+                <select asp-for="Faculty.FacultyName" asp-items="new SelectList(ViewBag.Faculties)" class="form-control"></select>
                 <span asp-validation-for="Faculty.FacultyName" class="text-danger"></span>
             </div>
             <div class="form-group">

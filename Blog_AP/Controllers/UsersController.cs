@@ -29,7 +29,7 @@ namespace Blog_AP.Controllers
         }
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.User == null)
             {
@@ -49,6 +49,17 @@ namespace Blog_AP.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            //ViewBag.Roles = new SelectList(_context.Role, "RoleName", "RoleName");
+            //ViewBag.Faculties = new SelectList(_context.Faculty, "FacultyName", "FacultyName");
+
+            ViewBag.Roles = _context.Role
+                .Select(r => r.RoleName)
+                .ToList();
+
+            ViewBag.Faculties = _context.Faculty
+                .Select(f => f.FacultyName)
+                .ToList();
+
             return View();
         }
 
@@ -77,7 +88,7 @@ namespace Blog_AP.Controllers
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.User == null)
             {
@@ -93,13 +104,15 @@ namespace Blog_AP.Controllers
                 return NotFound();
             }
 
-            ViewBag.Roles = _context.Role
+            /*ViewBag.Roles = _context.Role
                 .Select(r => r.RoleName)
                 .ToList();
 
             ViewBag.Faculties = _context.Faculty
                 .Select(f => f.FacultyName)
-                .ToList();
+                .ToList();*/
+            ViewBag.Roles = new SelectList(_context.Role, "RoleName", "RoleName", user.Role.RoleName);
+            ViewBag.Faculties = new SelectList(_context.Faculty, "FacultyName", "FacultyName", user.Faculty.FacultyName);
 
             return View(user);
         }
@@ -109,7 +122,7 @@ namespace Blog_AP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,UserName,UserEmail,UserPassword,Role,Faculty")] User user)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,UserEmail,UserPassword,Role,Faculty")] User user)
         {
             if (id != user.Id)
             {
@@ -152,7 +165,7 @@ namespace Blog_AP.Controllers
         }
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.User == null)
             {
@@ -172,7 +185,7 @@ namespace Blog_AP.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.User == null)
             {
@@ -188,7 +201,7 @@ namespace Blog_AP.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int? id)
+        private bool UserExists(string id)
         {
           return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
         }
