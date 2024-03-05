@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog_AP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240305081232_V2")]
-    partial class V2
+    [Migration("20240305090933_V1")]
+    partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
