@@ -37,7 +37,7 @@ namespace Blog_AP.Controllers
             }
 
             var role = await _context.Role
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.RoleId == id);
             if (role == null)
             {
                 return NotFound();
@@ -57,7 +57,7 @@ namespace Blog_AP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RoleName")] Role role)
+        public async Task<IActionResult> Create([Bind("RoleId,RoleName")] Role role)
         {
             if (ModelState.IsValid)
             {
@@ -89,9 +89,9 @@ namespace Blog_AP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,RoleName")] Role role)
+        public async Task<IActionResult> Edit(int? id, [Bind("RoleId,RoleName")] Role role)
         {
-            if (id != role.Id)
+            if (id != role.RoleId)
             {
                 return NotFound();
             }
@@ -105,7 +105,7 @@ namespace Blog_AP.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoleExists(role.Id))
+                    if (!RoleExists(role.RoleId))
                     {
                         return NotFound();
                     }
@@ -128,7 +128,7 @@ namespace Blog_AP.Controllers
             }
 
             var role = await _context.Role
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.RoleId == id);
             if (role == null)
             {
                 return NotFound();
@@ -158,7 +158,7 @@ namespace Blog_AP.Controllers
 
         private bool RoleExists(int? id)
         {
-          return (_context.Role?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Role?.Any(e => e.RoleId == id)).GetValueOrDefault();
         }
     }
 }

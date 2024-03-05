@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blog_AP.Models
 {
-    public class Falcuty
+    public class Faculty
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -8,18 +8,22 @@ namespace Blog_AP.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("user_id")]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Column("user_name")]
         [Required]
-        public string? UserName { get; set; }
+        public string UserName { get; set; }
 
         [Column("user_email")]
         [Required]
-        public string? UserEmail { get; set;}
+        public string UserEmail { get; set;}
 
-        [Column("passoword")]
+        [Column("password")]
         [Required]
-        public string? UserPassword { get; set;}
+        public string UserPassword { get; set;}
+
+        public Role? Role { get; set; }
+
+        public Faculty? Faculty { get; set; }
     }
 }

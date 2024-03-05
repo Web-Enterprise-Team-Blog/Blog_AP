@@ -8,7 +8,7 @@ namespace Blog_AP.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("role_id")]
-        public int? Id { get; set; }
+        public int RoleId { get; set; }
 
         [Column("role_name")]
         [Required]

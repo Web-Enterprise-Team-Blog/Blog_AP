@@ -13,6 +13,6 @@ namespace Blog_AP.Data
         public DbSet<Blog_AP.Models.User>? User { get; set; }
         public DbSet<Blog_AP.Models.Role>? Role { get; set; }
         public DbSet<Blog_AP.Models.Article>? Article { get; set; }
-        public DbSet<Blog_AP.Models.Falcuty>? Falcuty { get; set; }
+        public DbSet<Blog_AP.Models.Faculty>? Falcuty { get; set; }
     }
 }
